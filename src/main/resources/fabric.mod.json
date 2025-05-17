@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "id": "plexmate",
+  "version": "${version}",
+  "name": "Plexmate",
+  "description": "Adds some QoL features when playing on Mineplex Games.",
+  "authors": ["Mubioh"],
+  "contact": {
+    "homepage": "https://modrinth.com/mod/plexmate"
+  },
+  "license": "MIT",
+  "icon": "assets/plexmate/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "com.mubioh.plexmate.client.PlexMateClient"
+    ],
+    "main": [
+      "com.mubioh.plexmate.PlexMate"
+    ]
+  },
+  "mixins": [
+    "plexmate.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric": "*",
+    "minecraft": "${minecraft_version}"
+  }
+}
