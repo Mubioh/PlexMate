@@ -9,7 +9,6 @@ public class QueueStateFeature implements Feature {
     @Override
     public void initialize() {
         ClientWorldEvents.AFTER_CLIENT_WORLD_CHANGE.register((client, world) -> {
-            if (!ServerUtils.isOnMineplex()) return;
             ServerUtils.setQueued(false);
         });
     }

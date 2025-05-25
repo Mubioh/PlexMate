@@ -9,6 +9,7 @@ import com.mubioh.plexmate.utils.ServerUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.hit.EntityHitResult;
+import org.apache.logging.log4j.core.jmx.Server;
 
 public class ClickActionFeature implements Feature {
 
@@ -61,6 +62,9 @@ public class ClickActionFeature implements Feature {
                     subCommand = PartyManager.isMember(name) ? "kick" : "revoke";
                 } else {
                     subCommand = "invite";
+                    if (ServerUtils.isQueued()) {
+                        ServerUtils.setQueued(false);
+                    }
                 }
             }
 
