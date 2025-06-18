@@ -6,6 +6,7 @@ import com.mubioh.plexmate.utils.ServerUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.client.network.ClientPlayerEntity;
+import net.minecraft.network.packet.s2c.play.ChatMessageS2CPacket;
 import net.minecraft.network.packet.s2c.play.GameMessageS2CPacket;
 import net.minecraft.text.Text;
 
@@ -27,19 +28,19 @@ public class AutoChatMixin {
             "Won the game"
     );
 
-    @Inject(method = "onGameMessage", at = @At("TAIL"))
-    private void onGameMessage(GameMessageS2CPacket packet, CallbackInfo ci) {
-        if (!ServerUtils.isOnMineplex()) return;
-
+    private void handleMessage(Text text) {
         MinecraftClient client = MinecraftClient.getInstance();
         ClientPlayerEntity player = client.player;
-        if (!PlexMateClient.config.autoGG || player == null) return;
 
-        Text text = packet.content();
-        if (text == null) return;
+        if (text == null || player == null || !PlexMateClient.config.autoGG) return;
+
+        String message = text.getString();
+
+        // DEBUG: Log the full message
+        System.out.println("[AutoGG] Received: " + message);
 
         for (String trigger : GG_TRIGGERS) {
-            if (text.getString().contains(trigger) && ServerUtils.isServerMessage(text)) {
+            if (message.contains(trigger) && (ServerUtils.isServerMessage(text) || message.replaceAll("§[0-9a-fk-or]", "").toLowerCase().contains(trigger.toLowerCase()))) {
                 int delaySeconds = PlexMateClient.config.autoGGCooldown;
 
                 new Thread(() -> {
@@ -58,5 +59,17 @@ public class AutoChatMixin {
                 break;
             }
         }
+    }
+
+    @Inject(method = "onGameMessage", at = @At("TAIL"))
+    private void onGameMessage(GameMessageS2CPacket packet, CallbackInfo ci) {
+        if (!ServerUtils.isOnMineplex()) return;
+        handleMessage(packet.content());
+    }
+
+    @Inject(method = "onChatMessage", at = @At("TAIL"))
+    private void onChatMessage(ChatMessageS2CPacket packet, CallbackInfo ci) {
+        if (!ServerUtils.isOnMineplex()) return;
+        handleMessage(packet.unsignedContent()); // or `packet.body().content()` depending on version
     }
 }
