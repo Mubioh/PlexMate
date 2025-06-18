@@ -36,9 +36,6 @@ public class AutoChatMixin {
 
         String message = text.getString();
 
-        // DEBUG: Log the full message
-        System.out.println("[AutoGG] Received: " + message);
-
         for (String trigger : GG_TRIGGERS) {
             if (message.contains(trigger) && (ServerUtils.isServerMessage(text) || message.replaceAll("§[0-9a-fk-or]", "").toLowerCase().contains(trigger.toLowerCase()))) {
                 int delaySeconds = PlexMateClient.config.autoGGCooldown;
@@ -70,6 +67,6 @@ public class AutoChatMixin {
     @Inject(method = "onChatMessage", at = @At("TAIL"))
     private void onChatMessage(ChatMessageS2CPacket packet, CallbackInfo ci) {
         if (!ServerUtils.isOnMineplex()) return;
-        handleMessage(packet.unsignedContent()); // or `packet.body().content()` depending on version
+        handleMessage(packet.unsignedContent());
     }
 }
