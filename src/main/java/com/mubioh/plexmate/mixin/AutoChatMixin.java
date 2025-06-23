@@ -22,6 +22,7 @@ public class AutoChatMixin {
 
     private static final List<String> GG_TRIGGERS = List.of(
             "has won the game!",
+            "won the game!",
             "You have defeated",
             "1st Place",
             "Game over! The",

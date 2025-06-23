@@ -19,6 +19,7 @@ public class GameQueueFeature implements Feature {
         GAME_MODE_COMMANDS.put("Micro Battles", "microbattles");
         GAME_MODE_COMMANDS.put("Minestrike", "minestrike");
         GAME_MODE_COMMANDS.put("One in the Quiver", "oitq");
+        GAME_MODE_COMMANDS.put("Bomb Lobbers", "lob");
         GAME_MODE_COMMANDS.put("Skywars", "skywars");
         GAME_MODE_COMMANDS.put("Speed Builders", "speedbuilders");
         GAME_MODE_COMMANDS.put("Survival Games", "survivalgames");
