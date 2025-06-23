@@ -2,6 +2,7 @@ package com.mubioh.plexmate.mixin;
 
 import com.mubioh.plexmate.settings.PlexmateOptions;
 
+import com.mubioh.plexmate.utils.ServerUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.SplashTextRenderer;
@@ -104,11 +105,14 @@ public abstract class TitleScreenMixin extends Screen {
         MinecraftClient client = MinecraftClient.getInstance();
         if (client.currentScreen == null) return;
 
-        String domain = PlexmateOptions.SELECTED_DOMAIN.getValue() ? "clans.mineplex.com" : "mineplex.com";
+        boolean isClans = PlexmateOptions.SELECTED_DOMAIN.getValue();
+        String domain = isClans ? "clans.mineplex.com" : "mineplex.com";
         ServerInfo serverInfo = new ServerInfo("Mineplex Games", domain, ServerInfo.ServerType.OTHER);
         serverInfo.setResourcePackPolicy(ServerInfo.ResourcePackPolicy.ENABLED);
 
         ServerAddress serverAddress = ServerAddress.parse(domain);
+        ServerUtils.setShouldQueueClans(isClans);
         ConnectScreen.connect(client.currentScreen, client, serverAddress, serverInfo, false, null);
     }
+
 }

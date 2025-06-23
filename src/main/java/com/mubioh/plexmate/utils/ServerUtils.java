@@ -5,10 +5,13 @@ import net.minecraft.client.network.ServerInfo;
 import net.minecraft.text.Text;
 import net.minecraft.text.TextColor;
 import net.minecraft.util.Formatting;
+import org.spongepowered.asm.mixin.Unique;
 
 public class ServerUtils {
 
     private static boolean isQueued = false;
+
+    @Unique private static boolean shouldQueueClans = false;
 
     public static boolean isOnMineplex() {
         MinecraftClient client = MinecraftClient.getInstance();
@@ -50,6 +53,16 @@ public class ServerUtils {
         } else if (msg.contains("removed you from game queues.") && isServerMessage(message)) {
             setQueued(false);
         }
+    }
+
+    @Unique
+    public static boolean getShouldQueueClans() {
+        return shouldQueueClans;
+    }
+
+    @Unique
+    public static void setShouldQueueClans(boolean value) {
+        shouldQueueClans = value;
     }
 
 }

@@ -11,6 +11,7 @@
     "LivingEntityRendererMixin",
     "PartyChatParserMixin",
     "QueueStatusMixin",
+    "ServerNetworkJoinMixin",
     "TitleScreenMixin"
   ],
   "injectors": {
