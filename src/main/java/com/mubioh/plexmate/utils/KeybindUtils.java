@@ -11,6 +11,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.InputUtil;
 
+import net.minecraft.util.Identifier;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.LinkedHashMap;
@@ -18,9 +19,9 @@ import java.util.Map;
 import java.util.function.Consumer;
 
 public class KeybindUtils {
-
     private static final Map<KeyBinding, Consumer<MinecraftClient>> BINDINGS = new LinkedHashMap<>();
-    private static final String CATEGORY = "Mineplex Games";
+
+    private static final KeyBinding.Category CATEGORY = KeyBinding.Category.create(Identifier.of("plexmate.mineplex_games"));
 
     public static void registerAll() {
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
@@ -31,13 +32,13 @@ public class KeybindUtils {
             }
         });
 
-        addMouseKeybind("Player Action", GLFW.GLFW_MOUSE_BUTTON_MIDDLE, client -> {
+        addMouseKeybind("key.plexmate.player_action", GLFW.GLFW_MOUSE_BUTTON_MIDDLE, client -> {
             if (client.player != null && client.getNetworkHandler() != null && ServerUtils.isOnMineplex()) {
                 ClickActionFeature.onClick(client);
             }
         });
 
-        addMouseKeybind("Queue/Unqueue", GLFW.GLFW_MOUSE_BUTTON_5, client -> {
+        addMouseKeybind("key.plexmate.queue_unqueue", GLFW.GLFW_MOUSE_BUTTON_5, client -> {
             if (client.player != null && client.getNetworkHandler() != null && ServerUtils.isOnMineplex()) {
                 String selectedCommand = GameQueueFeature.GAME_MODE_COMMANDS.get(PlexmateOptions.SELECTED_GAME.getValue());
                 String command = ServerUtils.isQueued() ? "unqueue" : "queue " + selectedCommand;

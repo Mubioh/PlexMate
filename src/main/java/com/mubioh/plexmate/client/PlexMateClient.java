@@ -33,7 +33,7 @@ public class PlexMateClient implements ClientModInitializer {
         });
 
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
-            if (InputUtil.isKeyPressed(client.getWindow().getHandle(), GLFW.GLFW_KEY_RIGHT_CONTROL)) {
+            if (InputUtil.isKeyPressed(client.getWindow(), GLFW.GLFW_KEY_RIGHT_CONTROL)) {
                 client.setScreen(new com.mubioh.plexmate.settings.PlexmateSettingsScreen(null, client.options));
             }
         });

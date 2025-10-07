@@ -50,7 +50,7 @@ public class ClickActionFeature implements Feature {
                 entityHit.getEntity() instanceof PlayerEntity targetPlayer &&
                 !targetPlayer.equals(client.player)) {
 
-            String name = targetPlayer.getGameProfile().getName();
+            String name = targetPlayer.getGameProfile().name();
             boolean shift = client.options.sneakKey.isPressed();
             String baseCommand = mode == ClickMode.FRIEND ? "friend" : "party";
 
