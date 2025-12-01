@@ -20,8 +20,9 @@ import java.util.function.Consumer;
 
 public class KeybindUtils {
     private static final Map<KeyBinding, Consumer<MinecraftClient>> BINDINGS = new LinkedHashMap<>();
-
     private static final KeyBinding.Category CATEGORY = KeyBinding.Category.create(Identifier.of("plexmate.mineplex_games"));
+
+    public static KeyBinding SETTINGS_SCREEN_KEY;
 
     public static void registerAll() {
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
@@ -31,6 +32,12 @@ public class KeybindUtils {
                 }
             }
         });
+
+        SETTINGS_SCREEN_KEY = addKeybind(
+                "key.plexmate.open_settings",
+                GLFW.GLFW_KEY_RIGHT_CONTROL,
+                client -> {}
+        );
 
         addMouseKeybind("key.plexmate.player_action", GLFW.GLFW_MOUSE_BUTTON_MIDDLE, client -> {
             if (client.player != null && client.getNetworkHandler() != null && ServerUtils.isOnMineplex()) {

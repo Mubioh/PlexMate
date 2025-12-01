@@ -6,6 +6,7 @@
   "client": [
     "AutoChatMixin",
     "AutoFriendMixin",
+    "KeyBindingAccessor",
     "LivingEntityRendererMixin",
     "PartyChatParserMixin",
     "QueueStatusMixin",
